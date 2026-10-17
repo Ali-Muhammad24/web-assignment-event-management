@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import { login, clearAuthError } from '../store/authSlice'
 import './AuthForm.css'
 
@@ -25,6 +26,7 @@ function validate({ email, password }) {
 function Login() {
   const dispatch = useDispatch()
   const { currentUser, error } = useSelector((state) => state.auth)
+  const location = useLocation()
 
   const [form, setForm] = useState({ email: '', password: '' })
   const [errors, setErrors] = useState({})
@@ -50,15 +52,10 @@ function Login() {
     dispatch(login(form))
   }
 
-  // Temporary until routing: Step 5 will redirect to the Events page instead
+  // Once logged in, go back to the page that sent us here (or Events)
   if (currentUser) {
-    return (
-      <div className="auth-page">
-        <div className="auth-card">
-          <p className="auth-success">Logged in as {currentUser.name}</p>
-        </div>
-      </div>
-    )
+    const redirectTo = location.state?.from || '/events'
+    return <Navigate to={redirectTo} replace />
   }
 
   return (
@@ -99,6 +96,10 @@ function Login() {
         <button type="submit" className="auth-submit">
           Log in
         </button>
+
+        <p className="auth-switch">
+          Don't have an account? <Link to="/register">Register</Link>
+        </p>
       </form>
     </div>
   )

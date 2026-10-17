@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link, Navigate } from 'react-router-dom'
 import { register, clearAuthError } from '../store/authSlice'
 import './AuthForm.css'
 
@@ -58,15 +59,9 @@ function Register() {
     dispatch(register(form))
   }
 
-  // Temporary until routing: Step 5 will redirect to the Events page instead
+  // Registering also logs the user in, so send them to Events
   if (currentUser) {
-    return (
-      <div className="auth-page">
-        <div className="auth-card">
-          <p className="auth-success">Logged in as {currentUser.name}</p>
-        </div>
-      </div>
-    )
+    return <Navigate to="/events" replace />
   }
 
   return (
@@ -120,6 +115,10 @@ function Register() {
         <button type="submit" className="auth-submit">
           Register
         </button>
+
+        <p className="auth-switch">
+          Already have an account? <Link to="/login">Log in</Link>
+        </p>
       </form>
     </div>
   )

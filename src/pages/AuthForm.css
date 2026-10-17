@@ -3,7 +3,6 @@
 .auth-page {
   --error: #dc2626;
   --error-bg: rgba(220, 38, 38, 0.1);
-  --success: #16a34a;
 
   display: flex;
   justify-content: center;
@@ -14,7 +13,6 @@
   .auth-page {
     --error: #f87171;
     --error-bg: rgba(248, 113, 113, 0.15);
-    --success: #4ade80;
   }
 }
 
@@ -81,9 +79,15 @@
   font-size: 15px;
 }
 
-.auth-success {
-  color: var(--success);
+/* "Don't have an account? Register" line under the form */
+.auth-switch {
+  margin-top: 18px;
   text-align: center;
+  font-size: 15px;
+
+  a {
+    color: var(--accent);
+  }
 }
 
 .auth-submit {
