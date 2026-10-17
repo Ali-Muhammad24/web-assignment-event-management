@@ -1,0 +1,41 @@
+.error-message {
+  --error: #dc2626;
+  --error-bg: rgba(220, 38, 38, 0.1);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 32px auto;
+  max-width: 480px;
+  padding: 16px;
+  border-radius: 8px;
+  color: var(--error);
+  background: var(--error-bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .error-message {
+    --error: #f87171;
+    --error-bg: rgba(248, 113, 113, 0.15);
+  }
+}
+
+.error-retry {
+  font: inherit;
+  font-size: 15px;
+  padding: 6px 14px;
+  border: 1px solid var(--error);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--error);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--error-bg);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--error);
+    outline-offset: 2px;
+  }
+}
