@@ -60,9 +60,21 @@ function EventDetails() {
     setFeedback({ eventId: id, text: 'Your registration has been cancelled.' })
   }
 
-  function renderRegistration() {
+  // Buy tickets + Register / Cancel in one row, feedback message underneath
+  function renderActions() {
     return (
-      <div className="details-registration">
+      <div className="details-actions">
+        {event.url && (
+          <a
+            href={event.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="details-tickets"
+          >
+            Buy tickets
+          </a>
+        )}
+
         {isRegistered ? (
           <>
             <span className="details-registered-badge">✓ You're registered</span>
@@ -94,11 +106,14 @@ function EventDetails() {
 
     return (
       <article className="details">
-        {event.image ? (
-          <img src={event.image} alt={event.name} className="details-image" />
-        ) : (
-          <div className="details-image details-no-image">No image</div>
-        )}
+        {/* Wrapper lets the image fill the same height as the details column */}
+        <div className="details-media">
+          {event.image ? (
+            <img src={event.image} alt={event.name} className="details-image" />
+          ) : (
+            <div className="details-image details-no-image">No image</div>
+          )}
+        </div>
 
         <div className="details-body">
           <span className="details-category">{event.category}</span>
@@ -118,26 +133,16 @@ function EventDetails() {
             <dd>{formatPrice(event.priceRange)}</dd>
           </dl>
 
-          {event.url && (
-            <a
-              href={event.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="details-tickets"
-            >
-              Buy tickets
-            </a>
-          )}
-
-          {renderRegistration()}
-
-          {event.info && (
-            <section className="details-info">
-              <h3>About this event</h3>
-              <p>{event.info}</p>
-            </section>
-          )}
+          {renderActions()}
         </div>
+
+        {/* Full width below the image and details */}
+        {event.info && (
+          <section className="details-info">
+            <h3>About this event</h3>
+            <p>{event.info}</p>
+          </section>
+        )}
       </article>
     )
   }

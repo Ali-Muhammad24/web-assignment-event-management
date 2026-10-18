@@ -1,6 +1,5 @@
 .details-page {
   padding: 32px 24px 48px;
-  text-align: left;
 
   @media (max-width: 600px) {
     padding: 24px 16px 40px;
@@ -11,44 +10,72 @@
   display: inline-block;
   margin-bottom: 20px;
   font-size: 15px;
+  font-weight: 500;
   color: var(--accent);
   text-decoration: none;
 
   &:hover {
+    color: var(--accent-hover);
     text-decoration: underline;
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
   }
 }
 
-/* Image on the left, details on the right; stacked on mobile */
+/* Image on the left, details on the right (same height); stacked on mobile */
 .details {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 32px;
-  align-items: start;
+  align-items: stretch;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
 
-  @media (max-width: 600px) {
+  @media (max-width: 800px) {
     grid-template-columns: 1fr;
     gap: 20px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 16px;
+  }
+}
+
+/* Desktop: the image is taken out of the flow and fills the wrapper,
+   so the details column decides the row height */
+.details-media {
+  position: relative;
+  min-height: 260px;
+
+  @media (max-width: 800px) {
+    position: static;
+    min-height: 0;
   }
 }
 
 .details-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   object-fit: cover;
   display: block;
-  border-radius: 12px;
+  border-radius: 8px;
+
+  /* Mobile: a normal 16:9 picture above the details */
+  @media (max-width: 800px) {
+    position: static;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
 }
 
 .details-no-image {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--code-bg);
+  background: var(--surface-muted);
   font-size: 15px;
 }
 
@@ -60,8 +87,10 @@
 
 .details-category {
   align-self: flex-start;
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
   padding: 2px 10px;
   border-radius: 999px;
   color: var(--accent);
@@ -70,9 +99,7 @@
 
 .details-name {
   margin: 0;
-  font-family: var(--heading);
   line-height: 1.25;
-  color: var(--text-h);
 }
 
 /* Label / value pairs */
@@ -84,42 +111,27 @@
   font-size: 16px;
 
   dt {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--text-h);
   }
   dd {
     margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* Labels above values on narrow screens */
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
+    gap: 2px;
+
+    dd {
+      margin-bottom: 8px;
+    }
   }
 }
 
-/* Same look as the Search button on the events page */
-.details-tickets {
-  align-self: flex-start;
-  font-size: 16px;
-  font-weight: 500;
-  padding: 10px 24px;
-  border-radius: 6px;
-  background: var(--accent);
-  color: #fff;
-  text-decoration: none;
-  transition: opacity 0.2s;
-
-  &:hover {
-    opacity: 0.9;
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
-  @media (max-width: 600px) {
-    align-self: stretch;
-    text-align: center;
-  }
-}
-
-/* Register / cancel area */
-.details-registration {
+/* Buy tickets + Register / Cancel in one row; wraps if there isn't room */
+.details-actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -127,51 +139,52 @@
   margin-top: 4px;
 }
 
+.details-tickets,
 .details-register,
 .details-cancel {
   font: inherit;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 600;
   padding: 10px 24px;
   border-radius: 6px;
   cursor: pointer;
-  transition: opacity 0.2s;
+  transition: background 0.2s, border-color 0.2s;
 
-  &:hover {
-    opacity: 0.9;
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-
+  /* Mobile: full-width buttons, one per line */
   @media (max-width: 600px) {
     flex: 1 1 100%;
+    text-align: center;
   }
 }
 
-/* Same look as the Buy tickets button */
+/* Same look as the Search button on the events page */
+.details-tickets,
 .details-register {
   border: 2px solid var(--accent);
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--accent-hover);
+    background: var(--accent-hover);
+  }
 }
 
 /* Outlined, so it reads as the secondary action */
 .details-cancel {
   border: 2px solid var(--border);
-  background: transparent;
+  background: var(--surface);
   color: var(--text-h);
 
   &:hover {
-    opacity: 1;
     border-color: var(--text-h);
   }
 }
 
 .details-registered-badge {
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   color: var(--accent);
 }
 
@@ -181,14 +194,15 @@
   padding: 10px 14px;
   border-radius: 6px;
   font-size: 15px;
-  color: var(--accent);
+  color: var(--accent-hover);
   background: var(--accent-bg);
   border: 1px solid var(--accent-border);
 }
 
+/* Full-width row under the image and details */
 .details-info {
-  margin-top: 8px;
-  padding-top: 16px;
+  grid-column: 1 / -1;
+  padding-top: 20px;
   border-top: 1px solid var(--border);
 
   h3 {

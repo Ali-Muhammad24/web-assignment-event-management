@@ -1,12 +1,12 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Events from './pages/Events'
 import EventDetails from './pages/EventDetails'
 import MyEvents from './pages/MyEvents'
-import './App.css'
 
 function App() {
   return (
@@ -30,6 +30,8 @@ function App() {
         {/* Unknown URLs go back to the events list */}
         <Route path="*" element={<Navigate to="/events" replace />} />
       </Routes>
+
+      <Footer />
     </>
   )
 }
