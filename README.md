@@ -83,8 +83,8 @@ Built for **Web Programming – Assignment 2** using React, Redux Toolkit, and R
 **1. Clone the repository**
 
 ```bash
-git clone <repository-url>
-cd <repository-folder>
+git clone https://github.com/Ali-Muhammad24/web-assignment-event-management.git
+cd web-assignment-event-management
 ```
 
 **2. Install dependencies**
