@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer, { USERS_KEY, CURRENT_USER_KEY } from './authSlice'
 import eventsReducer from './eventsSlice'
+import registrationsReducer, { REGISTRATIONS_KEY } from './registrationsSlice'
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     events: eventsReducer,
+    registrations: registrationsReducer,
   },
 })
 
@@ -28,4 +30,15 @@ store.subscribe(() => {
   }
 
   previousAuth = auth
+})
+
+// Save registrations to Local Storage whenever they change
+let previousRegistrations = store.getState().registrations.items
+
+store.subscribe(() => {
+  const { items } = store.getState().registrations
+  if (items === previousRegistrations) return
+
+  localStorage.setItem(REGISTRATIONS_KEY, JSON.stringify(items))
+  previousRegistrations = items
 })

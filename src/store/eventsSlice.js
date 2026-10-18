@@ -29,6 +29,8 @@ function simplifyEvent(event) {
     name: event.name,
     date: event.dates?.start?.localDate || null,
     time: event.dates?.start?.localTime || null,
+    // Exact start in UTC (e.g. "2026-10-24T18:30:00Z"); missing when the time is TBA
+    dateTime: event.dates?.start?.dateTime || null,
     image,
     venue: venue?.name || 'Venue to be announced',
     city: venue?.city?.name || '',
